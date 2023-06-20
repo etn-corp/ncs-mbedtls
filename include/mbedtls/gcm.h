@@ -41,14 +41,16 @@
 #define MBEDTLS_GCM_ENCRYPT     1
 #define MBEDTLS_GCM_DECRYPT     0
 
-#define MBEDTLS_ERR_GCM_AUTH_FAILED                       -0x0012  /**< Authenticated decryption failed. */
-#define MBEDTLS_ERR_GCM_BAD_INPUT                         -0x0014  /**< Bad input parameters to function. */
+/** Authenticated decryption failed. */
+#define MBEDTLS_ERR_GCM_AUTH_FAILED                       -0x0012
+/** Bad input parameters to function. */
+#define MBEDTLS_ERR_GCM_BAD_INPUT                         -0x0014
+/** An output buffer is too small. */
+#define MBEDTLS_ERR_GCM_BUFFER_TOO_SMALL                  -0x0016
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#if defined(MBEDTLS_GCM_C)
 
 #if !defined(MBEDTLS_GCM_ALT)
 
@@ -372,10 +374,10 @@ void mbedtls_gcm_free( mbedtls_gcm_context *ctx );
 int mbedtls_gcm_self_test( int verbose );
 
 #endif /* MBEDTLS_SELF_TEST */
-#endif /* MBEDTLS_GCM_C */
 
 #ifdef __cplusplus
 }
 #endif
+
 
 #endif /* gcm.h */

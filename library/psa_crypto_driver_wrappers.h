@@ -26,6 +26,12 @@
 #include "psa/crypto_driver_common.h"
 
 /*
+ * Initialization and termination functions
+ */
+psa_status_t psa_driver_wrapper_init( void );
+void psa_driver_wrapper_free( void );
+
+/*
  * Signature functions
  */
 psa_status_t psa_driver_wrapper_sign_message(
@@ -85,6 +91,12 @@ psa_status_t psa_driver_wrapper_get_key_buffer_size(
     const psa_key_attributes_t *attributes,
     size_t *key_buffer_size );
 
+psa_status_t psa_driver_wrapper_get_key_buffer_size_from_key_data(
+    const psa_key_attributes_t *attributes,
+    const uint8_t *data,
+    size_t data_length,
+    size_t *key_buffer_size );
+
 psa_status_t psa_driver_wrapper_generate_key(
     const psa_key_attributes_t *attributes,
     uint8_t *key_buffer, size_t key_buffer_size, size_t *key_buffer_length );
@@ -94,6 +106,11 @@ psa_status_t psa_driver_wrapper_get_builtin_key(
     psa_key_attributes_t *attributes,
     uint8_t *key_buffer, size_t key_buffer_size, size_t *key_buffer_length );
 
+psa_status_t psa_driver_wrapper_copy_key(
+    psa_key_attributes_t *attributes,
+    const uint8_t *source_key, size_t source_key_length,
+    uint8_t *target_key_buffer, size_t target_key_buffer_size,
+    size_t *target_key_buffer_length );
 /*
  * Cipher functions
  */
@@ -102,6 +119,8 @@ psa_status_t psa_driver_wrapper_cipher_encrypt(
     const uint8_t *key_buffer,
     size_t key_buffer_size,
     psa_algorithm_t alg,
+    const uint8_t *iv,
+    size_t iv_length,
     const uint8_t *input,
     size_t input_length,
     uint8_t *output,
@@ -319,6 +338,25 @@ psa_status_t psa_driver_wrapper_key_agreement(
         const uint8_t *publ_key, size_t peer_key_size,
         uint8_t *output, size_t output_size, size_t *output_length,
         psa_algorithm_t alg );
+
+/*
+ * Asymmetric operations
+ */
+psa_status_t psa_driver_wrapper_asymmetric_encrypt(const psa_key_attributes_t *attributes,
+                                const uint8_t *key_buffer,
+                                size_t key_buffer_size, psa_algorithm_t alg,
+                                const uint8_t *input, size_t input_length,
+                                const uint8_t *salt, size_t salt_length,
+                                uint8_t *output, size_t output_size,
+                                size_t *output_length);
+
+psa_status_t psa_driver_wrapper_asymmetric_decrypt(const psa_key_attributes_t *attributes,
+                                const uint8_t *key_buffer,
+                                size_t key_buffer_size, psa_algorithm_t alg,
+                                const uint8_t *input, size_t input_length,
+                                const uint8_t *salt, size_t salt_length,
+                                uint8_t *output, size_t output_size,
+                                size_t *output_length);
 
 #endif /* PSA_CRYPTO_DRIVER_WRAPPERS_H */
 
